@@ -118,7 +118,7 @@ CMD ["npm", "run", "start:prod"]
 
 ## 📁 Estrutura de Pastas do Projeto
 
-bash
+```bash
 ├── frontend/
 │   ├── src/
 │   │   ├── components/    # Componentes reutilizáveis
@@ -135,4 +135,3 @@ bash
     ├── deployments/       # Deployments YAML
     ├── services/          # Services YAML
     └── configmaps/        # ConfigMaps YAML
-
