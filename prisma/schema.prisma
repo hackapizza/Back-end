@@ -1,0 +1,121 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Enums
+enum Cargo {
+  gerente
+  atendente
+  cozinheiro
+}
+
+enum Categoria {
+  pizza
+  bebida
+  sobremesa
+  outra
+}
+
+enum StatusPedido {
+  recebido
+  preparando
+  entregue
+  cancelado
+}
+
+enum FormaPagamento {
+  dinheiro
+  cartao
+  pix
+}
+
+// Modelos
+model Usuario {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  email         String   @unique
+  senha         String
+  cargo         Cargo
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+  deletadoEm    DateTime?
+  pedidos       Pedido[]
+}
+
+model Cliente {
+  id            Int      @id @default(autoincrement())
+  nome          String
+  cpf           String   @unique
+  telefone      String
+  bairro        String
+  rua           String
+  numero        String
+  cidade        String
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+  deletadoEm    DateTime?
+  pedidos       Pedido[]
+}
+
+model Produto {
+  id                    Int      @id @default(autoincrement())
+  nome                  String
+  descricao             String?
+  preco                 Float
+  categoria             Categoria
+  imageUrl              String?
+  tamanho               String?
+  sabores               Json?
+  volumeMl              Int?
+  tempoPreparoEstimado  Int?
+  disponivel            Boolean  @default(true)
+  criadoEm              DateTime @default(now())
+  atualizadoEm          DateTime @updatedAt
+  deletadoEm            DateTime?
+  itensPedido           ItemPedido[]
+}
+
+model Pedido {
+  id              Int      @id @default(autoincrement())
+  clienteId       Int
+  usuarioId       Int
+  dataPedido      DateTime
+  status          StatusPedido
+  total           Float
+  formaPagamento  FormaPagamento
+  observacoes     String?
+  criadoEm        DateTime @default(now())
+  atualizadoEm    DateTime @updatedAt
+  deletadoEm      DateTime?
+  cliente         Cliente  @relation(fields: [clienteId], references: [id])
+  usuario         Usuario  @relation(fields: [usuarioId], references: [id])
+  itens           ItemPedido[]
+
+  @@index([status])
+  @@index([dataPedido])
+}
+
+model ItemPedido {
+  id            Int      @id @default(autoincrement())
+  pedidoId      Int
+  produtoId     Int
+  quantidade    Int
+  subtotal      Float
+  criadoEm      DateTime @default(now())
+  atualizadoEm  DateTime @updatedAt
+  deletadoEm    DateTime?
+  pedido        Pedido   @relation(fields: [pedidoId], references: [id])
+  produto       Produto  @relation(fields: [produtoId], references: [id])
+}
