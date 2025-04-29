@@ -6,7 +6,7 @@ A aplicação é containerizada e gerenciada através do *Rancher, com persistê
 
 ---
 
-## 🏩 Arquitetura
+## Arquitetura
 
 ### Frontend (React)
 - Interface moderna e responsiva
@@ -34,104 +34,103 @@ A aplicação é containerizada e gerenciada através do *Rancher, com persistê
 
 ---
 
-## ✅ Funcionalidades Principais
+## Funcionalidades Principais
 - Cadastro e autenticação de usuários
 - Gerenciamento de cardápio de pizzas
 - Realização e acompanhamento de pedidos
 - Atualização de status dos pedidos (em produção, entregue)
 - Gestão de entregas
-- Relatórios e análises
 
 ---
 
-## ⚙️ Requisitos do Sistema
-- Node.js >= 14.x
-- Docker
-- Kubernetes
-- PostgreSQL
-- Rancher Desktop ou Server
+## Requisitos
 
----
+Antes de começar, instale:
 
-## 🚀 Configuração do Ambiente
+- [Node.js](https://nodejs.org)
+- [NPM](https://www.npmjs.com/)
+- [Rancher Desktop](https://rancherdesktop.io)
 
-### 1. Instalação das Dependências
+## Passo a passo para rodar o projeto
 
-bash
-# Frontend
-cd frontend
-npm install
-
-# Backend
-cd backend
-npm install
-
-
----
-
-### 2. Configuração do Prisma (Backend)
-
-bash
-# Instalação do Prisma CLI
-npm install @prisma/cli -D
-
-# Inicialização do Prisma
-npx prisma init
-
-# Após configurar os modelos Prisma, executar:
-npx prisma generate
-npx prisma migrate dev
-
-
----
-
-### 3. Configuração do Docker
-
-Exemplo de Dockerfile para o *backend*:
-
-Dockerfile
-FROM node:14-alpine
-
-WORKDIR /app
-
-COPY package*.json ./
-RUN npm install
-
-COPY . .
-
-RUN npm run build
-
-CMD ["npm", "run", "start:prod"]
-
-
----
-
-### 4. Configuração do Rancher
-
-- Criar cluster Kubernetes
-- Configurar namespaces (separação dos ambientes)
-- Definir recursos de CPU e Memória
-- Configurar Load Balancers para o frontend/backend
-- Estabelecer políticas de scaling automático
-
----
-
-## 📁 Estrutura de Pastas do Projeto
+### 1. Clonar o repositório
 
 ```bash
-├── frontend/
-│   ├── src/
-│   │   ├── components/    # Componentes reutilizáveis
-│   │   ├── pages/         # Páginas principais
-│   │   ├── services/      # Comunicação com API
-│   │   └── store/         # Gerenciamento de estado
-├── backend/
-│   ├── src/
-│   │   ├── modules/       # Módulos (Ex: Auth, Pedido, Pizza)
-│   │   ├── controllers/   # Controllers das rotas
-│   │   ├── services/      # Lógicas de negócio
-│   │   └── prisma/        # Configurações Prisma ORM
-└── k8s/
-    ├── deployments/       # Deployments YAML
-    ├── services/          # Services YAML
-    └── configmaps/        # ConfigMaps YAML
+git clone <URL-do-repositório>
+cd <nome-do-projeto>
+```
+
+### 2. Instalar dependências
+
+```bash
+npm install
+```
+
+### 3. Criar o arquivo `.env`
+
+Crie um arquivo `.env` na raiz do projeto com o seguinte conteúdo:
+
+```env
+DATABASE_URL="postgresql://myuser:mypassword@localhost:5432/mydb?schema=public"
+
+POSTGRES_USER=myuser
+POSTGRES_PASSWORD=mypassword
+POSTGRES_DB=mydb
+POSTGRES_PORT=5432
+```
+
+### 4. Subir o container do PostgreSQL
+
+Execute o comando abaixo para iniciar o banco de dados:
+
+```bash
+docker compose up -d
+# ou
+docker-compose up -d
+```
+
+### 5. Verificar se o container está rodando
+
+Use o comando:
+
+```bash
+docker ps
+```
+
+Certifique-se de que o container `hackathon_postgres` está listado.
+
+### 6. Aplicar as migrações com Prisma
+
+Rode:
+
+```bash
+npx prisma migrate dev
+```
+
+Se tudo estiver correto, você poderá visualizar o banco via navegador com:
+
+```bash
+npx prisma studio
+```
+
+### 7. Rodar a API
+
+Inicie a API com o comando:
+
+```bash
+npm run start
+```
+
+---
+
+## 📌 Observações
+
+- A API, por padrão, utiliza o banco de dados local exposto na porta `5432`.
+- Certifique-se de que nenhuma outra instância do PostgreSQL esteja ocupando essa porta.
+
+---
+
+## 📄 Licença
+
+Este projeto é de uso interno para fins de desenvolvimento. Consulte a equipe responsável para detalhes de licenciamento e distribuição.
+
