@@ -51,4 +51,9 @@ export class UsuarioService {
       data: { deletadoEm: new Date() },
     });
   }
+
+  async findByEmail(email: string) {
+    return this.prisma.usuario.findUnique({ where: { email } });
+  }
+  
 }
