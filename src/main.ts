@@ -16,11 +16,11 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document); // Acesso via /api
 
   app.enableCors({
-    origin: 'http://localhost:3001', // ou '*' se quiser liberar para todos
+    origin: 'http://localhost:3000', // ou '*' se quiser liberar para todos
     credentials: true,
   });
 
-  await app.listen(process.env.PORT ?? 3000);
-  console.log(`API is running on port ${process.env.PORT ?? 3000}`);
+  await app.listen(process.env.PORT ?? 4000);
+  console.log(`API is running on port ${process.env.PORT ?? 4000}`);
 }
 bootstrap();
