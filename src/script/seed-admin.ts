@@ -1,8 +1,8 @@
 // scripts/seed-admin.ts
 
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from '../../src/app.module';
-import { UsuarioService } from '../../src/usuario/usuario.service';
+import { AppModule } from '../app.module';
+import { UsuarioService } from '../usuario/usuario.service';
 import { Cargo } from '../../generated/prisma';
 
 async function bootstrap() {
