@@ -11,7 +11,7 @@ export class PedidoService {
   async create(dto: CreatePedidoDto) {
     return this.prisma.pedido.create({
       data: {
-        clienteId: dto.clienteId,
+        clienteId: dto.clienteId, 
         usuarioId: dto.usuarioId,
         dataPedido: new Date(),
         status: dto.status,
