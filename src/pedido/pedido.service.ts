@@ -8,11 +8,12 @@ import { FilterPedidoDto } from './dto/filter-pedido.dto';
 export class PedidoService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(dto: CreatePedidoDto) {
+  // Alterei o método para receber o usuarioId
+  async create(dto: CreatePedidoDto, usuarioId: number) {
     return this.prisma.pedido.create({
       data: {
-        clienteId: dto.clienteId, 
-        usuarioId: dto.usuarioId,
+        clienteId: dto.clienteId,
+        usuarioId: usuarioId,  
         dataPedido: new Date(),
         status: dto.status,
         total: dto.total,

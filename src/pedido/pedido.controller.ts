@@ -23,11 +23,8 @@ export class PedidoController {
   constructor(private readonly pedidoService: PedidoService) {}
 
   @Post()
-  create(@Body() dto: CreatePedidoDto, @User('sub') userId: number) {
-    return this.pedidoService.create({
-      ...dto,
-      usuarioId: userId,
-    });
+  async create(@Body() dto: CreatePedidoDto, @User('sub') usuarioId: number) {
+    return this.pedidoService.create(dto, usuarioId);  // Passa o usuarioId para o serviço
   }
 
   @Get()
