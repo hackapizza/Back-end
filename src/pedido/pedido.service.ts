@@ -64,7 +64,9 @@ export class PedidoService {
     const pedido = await this.prisma.pedido.findFirst({
       where: { id, deletadoEm: null },
       include: {
-        itens: true,
+        itens: {
+          include: { produto: true },
+        },
         cliente: true,
         usuario: true,
       },
