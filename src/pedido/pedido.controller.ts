@@ -24,7 +24,7 @@ export class PedidoController {
 
   @Post()
   async create(@Body() dto: CreatePedidoDto, @User('sub') usuarioId: number) {
-    return this.pedidoService.create(dto, usuarioId);  // Passa o usuarioId para o serviço
+    return this.pedidoService.create(dto, usuarioId);  
   }
 
   @Get()
