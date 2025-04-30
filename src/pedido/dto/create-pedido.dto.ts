@@ -22,6 +22,7 @@ export class CreatePedidoDto {
   @ApiProperty({ example: 1 })
   clienteId: number;
 
+  @IsOptional()
   @IsInt()
   @ApiProperty({ example: 1 })
   usuarioId: number;
