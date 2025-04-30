@@ -77,6 +77,7 @@ POSTGRES_USER=myuser
 POSTGRES_PASSWORD=mypassword
 POSTGRES_DB=mydb
 POSTGRES_PORT=5432
+PORT=4000
 ```
 
 ### 4. Subir o container do PostgreSQL
