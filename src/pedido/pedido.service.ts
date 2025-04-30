@@ -13,7 +13,7 @@ export class PedidoService {
     return this.prisma.pedido.create({
       data: {
         clienteId: dto.clienteId,
-        usuarioId: usuarioId,  
+        usuarioId: 1,  
         dataPedido: new Date(),
         status: dto.status,
         total: dto.total,
